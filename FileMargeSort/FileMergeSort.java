@@ -6,12 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FileMergeSort {
-  public static File file = new File("D:\\smallF.txt");
-  public static int mergeCounter = 1;
-  public static List<String> fileNames = new LinkedList<String>();
-  public static DataOutputStream writer;
-  public static File firstTemporaryFile;
-  public static File secondTemporaryFile;
+  private static File file = new File("D:\\smallF.txt");
+  private static int mergeCounter = 1;
+  private static List<String> fileNames = new LinkedList<String>();
+  private static DataOutputStream writer;
+  private static File firstTemporaryFile;
+  private static File secondTemporaryFile;
 
   public static List split (List<String> fileNames, File file) throws Exception {
     int indexOfParts = 0;
