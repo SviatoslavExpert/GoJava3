@@ -11,45 +11,36 @@ public class FileMergeSortTest {
   private static List<String> fileNames = new LinkedList<String>();
 
   @Test
-  public void givenBuffer32mbWhenMethodSplitMakeSmallPartsThenSmallPartsEqualBuffer() throws Exception {
+  public void shouldSplitToPartsLongAsBuffer() throws Exception {
 	FileMergeSort.split(fileNames, bigFile);
-	int actualResult = 32768;
-	long expectedResult = new File(fileNames.get(0)).length();
-	assertEquals(expectedResult / 4, actualResult);
+	long actualResult = new File(fileNames.get(0)).length();
+    int expectedResult = 32768;
+    assertEquals(expectedResult / 4, actualResult);
   }
 
   @Test
   public void shouldSplitBeginningOfInitialFileIntoFirstPart() throws Exception {
-
-
-	int [] actualResult = new int[10];
+	int[] actualResult = new int[10];
 
     fileNames = FileMergeSort.split(fileNames, smallFile);
 
     int[] expectedResult = new int[10];
 
-    try (DataInputStream firstDio = new DataInputStream(new FileInputStream(smallFile));
-       DataInputStream secondDio = new DataInputStream(new FileInputStream(fileNames.get(0)))) {
+    try (DataInputStream firstReader = new DataInputStream(new FileInputStream(smallFile));
+       DataInputStream secondReader = new DataInputStream(new FileInputStream(fileNames.get(0)))) {
 
-	  actualResult = readingActualResult(actualResult, firstDio);
+	  actualResult = reading(actualResult, firstReader);
 
-	  expectedResult = readingExpectedResult(expectedResult, secondDio);
+	  expectedResult = reading(expectedResult, secondReader);
 	}
 
 	MergeSort.sort(actualResult, 0, actualResult.length);
 	assertArrayEquals(expectedResult, actualResult);
   }
 
-  private int [] readingActualResult(int [] array, DataInputStream firstDio) throws Exception {
+  private int[] reading(int[] array, DataInputStream reader) throws Exception {
     for (int i = 0; i < array.length; i++) {
-      array[i] = firstDio.readInt();
-	}
-	return array;
-  }
-
-  private int [] readingExpectedResult(int [] array, DataInputStream secondDio) throws Exception {
-	for (int i = 0; i < array.length; i++) {
-      array[i] = secondDio.readInt();
+      array[i] = reader.readInt();
 	}
 	return array;
   }
