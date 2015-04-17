@@ -12,16 +12,16 @@ public class FileMergeSortTest {
 
   @Test
   public void shouldSplitToPartsLongAsBuffer() throws Exception {
-	FileMergeSort.split(fileNames, bigFile);
-	long actualResult = new File(fileNames.get(0)).length();
+    FileMergeSort.split(fileNames, bigFile);
+    long actualResult = new File(fileNames.get(0)).length();
     int expectedResult = 32768;
     assertEquals(expectedResult / 4, actualResult);
   }
 
   @Test
   public void shouldSplitBeginningOfInitialFileIntoFirstPart() throws Exception {
-	int[] actualResult = new int[10];
-	int[] expectedResult = new int[10];
+    int[] actualResult = new int[10];
+    int[] expectedResult = new int[10];
 
     fileNames = FileMergeSort.split(fileNames, smallFile);
 
@@ -29,25 +29,25 @@ public class FileMergeSortTest {
 
     expectedResult = readingExpected(expectedResult);
 
-	actualResult = MergeSort.sort(actualResult, 0, actualResult.length);
-	assertArrayEquals(expectedResult, actualResult);
+    actualResult = MergeSort.sort(actualResult, 0, actualResult.length);
+    assertArrayEquals(expectedResult, actualResult);
   }
 
   private int[] readingActual(int[] array) throws Exception {
     try (DataInputStream reader = new DataInputStream(new FileInputStream(smallFile))) {
-	  for (int i = 0; i < array.length; i++) {
+      for (int i = 0; i < array.length; i++) {
         array[i] = reader.readInt();
-	  }
+      }
     }
 	return array;
   }
 
   private int[] readingExpected(int[] array) throws Exception {
-	try (DataInputStream reader = new DataInputStream(new FileInputStream(fileNames.get(0)))) {
+    try (DataInputStream reader = new DataInputStream(new FileInputStream(fileNames.get(0)))) {
       for (int i = 0; i < array.length; i++) {
-		array[i] = reader.readInt();
-	  }
-	}
+        array[i] = reader.readInt();
+      }
+    }
     return array;
   }
 }
